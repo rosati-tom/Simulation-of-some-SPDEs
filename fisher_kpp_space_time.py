@@ -24,16 +24,16 @@ class fkpp:
 		self.state_b = x_1
 
 		# We initialize the space-time noise variable.
-		#self.noise =  np.random.normal(size = (space_pts) , scale = np.sqrt(1/(delta_t*delta_x)))
+		self.noise =  np.random.normal(size = (space_pts) , scale = np.sqrt(1/(delta_t*delta_x)))
 
 		# We can also try with one-dimensional noise.
-		self.noise =  np.ones(shape=space_pts)*np.random.normal(size = 1, scale = np.sqrt(1/delta_t))
+		#self.noise =  np.ones(shape=space_pts)*np.random.normal(size = 1, scale = np.sqrt(1/delta_t))
 
 	def do_step(self):
 
 		# We renew the noise:
-		#self.noise =  np.random.normal(size = (space_pts) , scale = np.sqrt(1/(delta_t*delta_x)))
-		self.noise =  np.ones(shape=space_pts)*np.random.normal(size = 1, scale = np.sqrt(1/delta_t))
+		self.noise =  np.random.normal(size = (space_pts) , scale = np.sqrt(1/(delta_t*delta_x)))
+		#self.noise =  np.ones(shape=space_pts)*np.random.normal(size = 1, scale = np.sqrt(1/delta_t))
 		
 		# We do one more step in the implicit Euler approximations
 		self.state_a = np.dot(resolvent, self.state_a - (np.multiply(np.multiply( \
@@ -100,9 +100,9 @@ lines_b,  = ax.plot([],[], lw = 2)
 plt.title("FKPP Equation with multiplicative space-time white noise")
 
 # We let the animation go.
-ani       = animation.FuncAnimation(fig, animate, frames=4000, interval = 70, blit = True)
+ani       = animation.FuncAnimation(fig, animate, frames=6000, interval = 80, blit = True)
 
-ani.save(filename = 'fisher_kpp_space_time_noise.html', extra_args=['-vcodec', 'libx264'], bitrate = 20000)
+ani.save(filename = 'fkpp_space_time_noise.gif')
 
 
 # INSTRUCTION FOR PUTTING VIDEO IN PRESENTATION.

@@ -1,6 +1,5 @@
 # Simulation of some SPDEs & related processes
 
-
 - We use a Galerkin approximation to simulate the stochastic heat equation with
   additive noise:
   <p align="center"><img src="/tex/3f3b3e0b508fd688fbee13006e8daad7.svg?invert_in_darkmode&sanitize=true" align=middle width=96.99100785pt height=14.611878599999999pt/></p>
