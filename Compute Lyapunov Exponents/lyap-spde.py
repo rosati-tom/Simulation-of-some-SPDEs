@@ -88,9 +88,9 @@ def angle(vect_input):
 		
 
 # We define the set of parameters we want to work with:
-tau = np.arange(0.01, 0.9,0.01)
+tau = np.arange(0.01, 0.9,0.05)
 NN = len(tau)
-TRYALS = 10
+TRYALS = 6
 results = np.zeros(shape = (NN,TRYALS))
 
 
