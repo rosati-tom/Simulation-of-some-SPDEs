@@ -7,6 +7,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib.animation import FuncAnimation
 import scipy as sp
 import scipy.sparse
 import scipy.sparse.linalg
@@ -27,11 +28,7 @@ class fkpp:
 		self.state_b = x_1
 
 		# We initialize the spatial noise variable.
-		self.noise =  0*np.random.normal(size = (space_pts) , scale = np.sqrt(1/delta_x)) + 1
-		for i in range(0,int(space_pts/4)):
-			self.noise[i]=0.5*(delta_x*i - delta_x*space_pts/4)
-		for i in range(int(space_pts/4), space_pts):
-			self.noise[i]=(delta_x*i - delta_x*space_pts/4)
+		self.noise =  1.0*np.random.normal(size = (space_pts) , scale = np.sqrt(1/delta_x))
 
 	def do_step(self):
 
@@ -62,21 +59,21 @@ def animate(i):
 	return [lines_a,] + [lines_b,] + [time_text,]
 
 # Space-Time discretisation
-delta_t = 1/180
-delta_x = 1/150
+delta_t = 1/80
+delta_x = 1/80
 
 # Box size:
-L = 10
+L = 50
 
 # Space discretisation
-space = np.arange(0.0, 2*np.pi*L + 0.001, delta_x)
+space = np.arange(0.0, 2*np.pi*L + 0.01, delta_x)
 space_pts = len(space)
 middle = int(space_pts/4)-1
 
 # We create a sample path
 # with initial condition x_0, x_1:
-x_0 = np.abs(0.5*np.sin(space))
-x_1 = np.abs(0.5*np.cos(space))
+x_0 = np.abs(0.5*np.sin(space/L))
+x_1 = np.abs(0.5*np.cos(space/L))
 
 fkpp_sample = fkpp(x_0, x_1)
 
@@ -99,10 +96,17 @@ lines_a,  = ax.plot([],[], lw = 2)
 lines_b,  = ax.plot([],[], lw = 2)
 plt.title("FKPP Equation")
 
-# We let the animation go.
-ani       = animation.FuncAnimation(fig, animate, frames=2000, interval = 70, blit = True)
 
-ani.save(filename = 'fisher_kpp.html', extra_args=['-vcodec', 'libx264'], bitrate = 20000)
+
+# We let the animation run.
+ani = FuncAnimation(fig, animate, frames= 200, repeat=False)
+mywriter = animation.PillowWriter(fps=30,bitrate=6000000)
+ani.save('fkpp-toyomu.gif',writer=mywriter)
+
+# # We let the animation go.
+# ani       = animation.FuncAnimation(fig, animate, frames=2000, interval = 70, blit = True)
+
+# ani.save(filename = 'fisher_kpp.html', extra_args=['-vcodec', 'libx264'], bitrate = 20000)
 
 
 # INSTRUCTION FOR PUTTING VIDEO IN PRESENTATION.

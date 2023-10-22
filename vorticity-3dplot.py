@@ -60,7 +60,7 @@ class vorticity_fast:
 		
 		# We define our space
 		# This parameter sets the length of the y axis as self.exs^-1 (which we neeed to be long)
-		self.eps = 0.2
+		self.eps = 1.6
 		# Then we set up the space
 		self.space_X = np.linspace(-0.5, 0.5, self.N)
 		self.space_Y = np.linspace(-0.5/self.eps, 0.5/self.eps, self.N)
@@ -281,7 +281,7 @@ def animate(i):
 	sys.stdout.write("\r Step = {}".format(i))
 
 	# And we do the next step:
-	for i in range(0,20):
+	for i in range(0,1):
 		vo_hv.implicit_euler()
 		vo_lv.implicit_euler()
 	
@@ -290,11 +290,11 @@ def animate(i):
 # We initiate our solver
 
 # First one with high viscosity
-vo_hv = vorticity_fast(1.00)
+vo_hv = vorticity_fast(2.00)
 
 # Second one with low viscosity
 # To compare to the previous one, we here use fast
-vo_lv = vorticity_fast(0.013)
+vo_lv = vorticity_fast(1.00)
 
 # We set up the plot
 fig = plt.figure(figsize=(40,20), dpi=20)
@@ -392,6 +392,6 @@ text6 = ax2.text(20.5, 5.95, 2.95,"Non-shear initial condition profiles",horizon
 
 
 # We let the animation run.
-ani = FuncAnimation(fig, animate, frames=5, repeat=False)
+ani = FuncAnimation(fig, animate, frames=200, repeat=False)
 mywriter = animation.PillowWriter(fps=16,bitrate=600000000)
-ani.save('vorticity-3d5.gif',writer=mywriter, dpi = 100)
+ani.save('vorticity-3d-try.gif',writer=mywriter, dpi = 100)
